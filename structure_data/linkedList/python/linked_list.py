@@ -1,3 +1,4 @@
+from __future__ import annotations
 from dataclasses import dataclass
 from typing import Optional
 
@@ -84,6 +85,36 @@ class LinkedList:
             if self.is_tail(after_node):
                 self.set_tail(node)
 
+    def remove_from_head(self) -> Optional[Node]:
+        if self.is_empty():
+            return
+
+        head = self.get_head()
+        if self.is_tail(head):
+            self.set_tail(head.get_next())    
+        self.set_head(head.get_next())
+        return head
+
+    def remove_from_tail(self) -> Optional[Node]:
+        if self.is_empty():
+            return
+        
+        # prev = None
+        # for node in self:
+        #     if self.is_tail(node.get_next()):
+        #         prev = node
+
+        return tail
+
+    def convert_to_array(self) -> list[Node]:
+        return [node for node in self]
+
+    def clear(self):
+        self.set_tail(None)
+        self.set_head(None)
+
     def __iter__(self) -> LinkedListIterator:
         return LinkedListIterator(self.get_head())
 
+    def __len__(self) -> int:
+        return len(self.convert_to_array())

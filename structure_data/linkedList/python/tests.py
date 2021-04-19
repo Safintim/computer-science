@@ -144,3 +144,67 @@ def test_linked_list_insert():
     list_.insert(prev_node, node)
     assert prev_node.get_next() == node
     assert node.get_next() == next_node
+
+
+def test_linked_list_get_array():
+    list_ = LinkedList()
+    nodes = create_nodes(6)
+    for node in nodes:
+        list_.add_to_head(node)
+    array = list_.convert_to_array()
+    assert nodes[::-1] == array
+
+
+def test_linked_list_len():
+    len_list = 6
+    list_ = create_linked_list(node_count=len_list)
+    assert len(list_) == len_list
+
+
+def test_linked_list_clear():
+    list_ = create_linked_list(node_count=6)
+    list_.clear()
+    assert list_.is_empty()
+
+
+def test_remove_from_head_empty():
+    list_ = LinkedList()
+    node = list_.remove_from_head()
+    assert node is None
+
+
+def test_remove_from_head_one_node():
+    list_ = LinkedList()
+    list_.add_to_head(create_nodes(1))
+    list_.remove_from_head()
+    assert list_.is_empty()
+
+
+def test_remove_from_head_two_node():
+    list_ = create_linked_list()
+    head = list_.get_head()
+    tail = list_.get_tail()
+    list_.remove_from_head()
+    assert list_.get_head() == tail
+    assert list_.get_tail() == tail
+
+
+def test_remove_from_head():
+    list_ = create_linked_list(node_count=6)
+    head = list_.get_head()
+    head_next = head.get_next()
+    list_.remove_from_head()
+    assert list_.get_head() == head_next
+
+
+def test_remove_from_tail_empty():
+    list_ = LinkedList()
+    node = list_.remove_from_tail()
+    assert node is None
+
+
+def test_remove_from_tail_one_node():
+    list_ = LinkedList()
+    list_.add_to_head(create_nodes(1))
+    list_.remove_from_tail()
+    assert list_.is_empty()
