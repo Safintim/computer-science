@@ -1,12 +1,14 @@
-from __future__ import annotations
 from dataclasses import dataclass
-from typing import Optional
+from typing import Optional, List
 
 
 @dataclass(eq=False)
 class Node:
     value: int
     next: Optional['Node'] = None
+
+    def get_value(self) -> int:
+        return self.value
 
     def get_next(self) -> Optional['Node']:
         return self.next
@@ -48,16 +50,16 @@ class LinkedList:
     def get_tail(self) -> Optional[Node]:
         return self._tail
 
-    def set_head(self, node: Node) -> None:
+    def set_head(self, node: Optional[Node]) -> None:
         self._head = node
 
-    def set_tail(self, node: Node) -> None:
+    def set_tail(self, node: Optional[Node]) -> None:
         self._tail = node
 
     def is_empty(self):
         return self.get_head() is None and self.get_tail() is None
 
-    def is_tail(self, node: Node) -> bool:
+    def is_tail(self, node: Optional[Node]) -> bool:
         return self.get_tail() == node
 
     def add_to_head(self, node: Node) -> None:
@@ -87,26 +89,36 @@ class LinkedList:
 
     def remove_from_head(self) -> Optional[Node]:
         if self.is_empty():
-            return
+            return None
 
         head = self.get_head()
         if self.is_tail(head):
-            self.set_tail(head.get_next())    
-        self.set_head(head.get_next())
+            self.clear()
+        else:
+            self.set_head(head.get_next())
         return head
 
     def remove_from_tail(self) -> Optional[Node]:
         if self.is_empty():
-            return
-        
-        # prev = None
-        # for node in self:
-        #     if self.is_tail(node.get_next()):
-        #         prev = node
+            return None
 
+        head = self.get_head()
+        if self.is_tail(head):
+            self.clear()
+            return head
+        
+        prev_tail = head
+        for node in self:
+            if self.is_tail(node.get_next()):
+                prev_tail = node
+                break
+        
+        tail = self.get_tail()
+        prev_tail.set_next(None)
+        self.set_tail(prev_tail)
         return tail
 
-    def convert_to_array(self) -> list[Node]:
+    def convert_to_array(self) -> List[Node]:
         return [node for node in self]
 
     def clear(self):

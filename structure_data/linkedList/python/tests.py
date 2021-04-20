@@ -1,12 +1,11 @@
-from __future__ import annotations
-from typing import Union
+from typing import Union, List
 
 import pytest
 
 from linked_list import Node, LinkedList
 
 
-def create_nodes(count: int, start_value: int=100) -> Union[list[Node], Node]:
+def create_nodes(count: int, start_value: int=100) -> Union[List[Node], Node]:
     if count == 1:
         return Node(start_value)
     return [Node(start_value + i) for i in range(count)]
@@ -208,3 +207,14 @@ def test_remove_from_tail_one_node():
     list_.add_to_head(create_nodes(1))
     list_.remove_from_tail()
     assert list_.is_empty()
+
+
+def test_remove_from_tail():
+    list_ = create_linked_list(node_count=6)
+    old_array = list_.convert_to_array()
+    old_tail = list_.get_tail()
+    node = list_.remove_from_tail()
+    new_array = list_.convert_to_array()
+    assert len(list_) == 5
+    assert old_tail == node
+    assert old_array[:-1] == new_array
