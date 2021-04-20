@@ -62,6 +62,9 @@ class LinkedList:
     def is_tail(self, node: Optional[Node]) -> bool:
         return self.get_tail() == node
 
+    def is_head(self, node: Optional[Node]) -> bool:
+        return self.get_head() == node
+
     def add_to_head(self, node: Node) -> None:
         if self.is_empty():
             self.set_head(node)
@@ -117,6 +120,28 @@ class LinkedList:
         prev_tail.set_next(None)
         self.set_tail(prev_tail)
         return tail
+
+    def remove(self, value: int, is_all: bool = False) -> None:
+        prev = self.get_head()
+        for node in self:
+            if node.get_value() == value:
+                if self.is_tail(node):
+                    self.remove_from_tail()
+                elif self.is_head(node):
+                    self.remove_from_head()
+                else:
+                    prev.set_next(node.get_next())
+                if not is_all:
+                    break
+            prev = node
+
+    def find(self, value: int) -> Optional[Node]:
+        for node in self:
+            if node.get_value() == value:
+                return node
+
+    def find_all(self, value: int) -> List[Node]:
+        return [node for node in self if node.get_value() == value]
 
     def convert_to_array(self) -> List[Node]:
         return [node for node in self]

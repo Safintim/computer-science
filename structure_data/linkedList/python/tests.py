@@ -166,20 +166,20 @@ def test_linked_list_clear():
     assert list_.is_empty()
 
 
-def test_remove_from_head_empty():
+def test_linked_list_remove_from_head_empty():
     list_ = LinkedList()
     node = list_.remove_from_head()
     assert node is None
 
 
-def test_remove_from_head_one_node():
+def test_linked_list_remove_from_head_one_node():
     list_ = LinkedList()
     list_.add_to_head(create_nodes(1))
     list_.remove_from_head()
     assert list_.is_empty()
 
 
-def test_remove_from_head_two_node():
+def test_linked_list_remove_from_head_two_node():
     list_ = create_linked_list()
     head = list_.get_head()
     tail = list_.get_tail()
@@ -188,7 +188,7 @@ def test_remove_from_head_two_node():
     assert list_.get_tail() == tail
 
 
-def test_remove_from_head():
+def test_linked_list_remove_from_head():
     list_ = create_linked_list(node_count=6)
     head = list_.get_head()
     head_next = head.get_next()
@@ -196,20 +196,20 @@ def test_remove_from_head():
     assert list_.get_head() == head_next
 
 
-def test_remove_from_tail_empty():
+def test_linked_list_remove_from_tail_empty():
     list_ = LinkedList()
     node = list_.remove_from_tail()
     assert node is None
 
 
-def test_remove_from_tail_one_node():
+def test_linked_list_remove_from_tail_one_node():
     list_ = LinkedList()
     list_.add_to_head(create_nodes(1))
     list_.remove_from_tail()
     assert list_.is_empty()
 
 
-def test_remove_from_tail():
+def test_linked_list_remove_from_tail():
     list_ = create_linked_list(node_count=6)
     old_array = list_.convert_to_array()
     old_tail = list_.get_tail()
@@ -218,3 +218,47 @@ def test_remove_from_tail():
     assert len(list_) == 5
     assert old_tail == node
     assert old_array[:-1] == new_array
+
+
+def test_linked_list_find():
+    list_ = create_linked_list(node_count=6)
+    assert bool(list_.find(value=100))
+    assert list_.find(value=200) is None
+
+
+def test_linked_list_find_all():
+    nodes = [Node(100), Node(200), Node(100), Node(300), Node(100)]
+    list_ = LinkedList()
+    for node in nodes:
+        list_.add_to_head(node)
+
+    expected = [node for node in nodes[::-1] if node.get_value() == 100]
+    assert list_.find_all(value=100) == expected
+
+
+def test_linked_list_remove_by_value():
+    nodes = [Node(100), Node(200), Node(100), Node(300), Node(100)]
+    list_nodes = nodes[::-1]
+    list_ = LinkedList()
+    for node in nodes:
+        list_.add_to_head(node)
+
+    list_.remove(value=100)
+    del list_nodes[0]
+    assert list_.convert_to_array() == list_nodes
+
+    list_.remove(value=200)
+    del list_nodes[2]
+    assert list_.convert_to_array() == list_nodes
+
+
+def test_linked_list_remove_by_value_all():
+    nodes = [Node(100), Node(200), Node(100), Node(300), Node(100)]
+    list_nodes = nodes[::-1]
+    list_ = LinkedList()
+    for node in nodes:
+        list_.add_to_head(node)
+
+    list_.remove(value=100, is_all=True)
+    assert list_.convert_to_array() == [node for node in list_nodes if node.get_value() != 100]
+    assert len(list_) == 2
