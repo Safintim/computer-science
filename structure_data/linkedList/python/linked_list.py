@@ -169,3 +169,15 @@ class LinkedList:
 
     def __len__(self) -> int:
         return len(self.convert_to_array())
+
+
+def head(list_: LinkedList) -> Optional[Node]:
+    return list_.get_head()
+
+
+def tail(list_: LinkedList) -> LinkedList:
+    new_list = LinkedList()
+    new_head = list_.get_head().get_next()
+    new_list.set_head(new_head)
+    new_list.set_tail(list_.get_tail())
+    return new_list

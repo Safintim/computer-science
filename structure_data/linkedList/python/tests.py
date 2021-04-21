@@ -2,7 +2,7 @@ from typing import Union, List
 
 import pytest
 
-from linked_list import Node, LinkedList
+from linked_list import Node, LinkedList, head, tail
 
 
 def create_nodes(
@@ -275,3 +275,18 @@ def test_linked_list_reverse():
     assert list_.convert_to_array() == expected
     assert list_.get_tail() == expected[-1]
     assert list_.get_head() == expected[0]
+
+
+def test_head():
+    list_ = create_linked_list(node_count=6)
+    assert head(list_) == list_.get_head()
+
+
+def test_tail():
+    list_ = create_linked_list(node_count=6)
+    old_head = list_.get_head()
+    old_list = list_.convert_to_array()
+    list_ = tail(list_)
+    expected = list_.convert_to_array()
+    assert list_.get_head() == old_head.get_next()
+    assert old_list[1:] == expected
