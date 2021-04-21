@@ -27,7 +27,7 @@ class LinkedListIterator:
     def __post_init__(self) -> None:
         self.current: Node = self.head
 
-    def __next__(self) -> Node:  #raises: StopIteration
+    def __next__(self) -> Node:  # raises: StopIteration
         if self.current is None:
             self.clear()
             raise StopIteration
@@ -109,13 +109,13 @@ class LinkedList:
         if self.is_tail(head):
             self.clear()
             return head
-        
+
         prev_tail = head
         for node in self:
             if self.is_tail(node.get_next()):
                 prev_tail = node
                 break
-        
+
         tail = self.get_tail()
         prev_tail.set_next(None)
         self.set_tail(prev_tail)
@@ -135,6 +135,20 @@ class LinkedList:
                     break
             prev = node
 
+    def reverse(self) -> None:
+        head = self.get_head()
+        tail = None
+        self.set_tail(head)
+        while head:
+            new_head = head.get_next()
+
+            if not new_head:
+                self.set_head(head)
+
+            head.set_next(tail)
+            tail = head
+            head = new_head
+
     def find(self, value: int) -> Optional[Node]:
         for node in self:
             if node.get_value() == value:
@@ -149,20 +163,6 @@ class LinkedList:
     def clear(self):
         self.set_tail(None)
         self.set_head(None)
-
-    def reverse(self) -> None:
-        head = self.get_head()
-        tail = None
-        self.set_tail(head)
-        while head:
-            new_head = head.get_next()
-            
-            if not new_head:
-                self.set_head(head)
-
-            head.set_next(tail)
-            tail = head
-            head = new_head
 
     def __iter__(self) -> LinkedListIterator:
         return LinkedListIterator(self.get_head())

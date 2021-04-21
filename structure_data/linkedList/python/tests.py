@@ -5,7 +5,10 @@ import pytest
 from linked_list import Node, LinkedList
 
 
-def create_nodes(count: int, start_value: int=100) -> Union[List[Node], Node]:
+def create_nodes(
+    count: int,
+    start_value: int = 100
+) -> Union[List[Node], Node]:
     if count == 1:
         return Node(start_value)
     return [Node(start_value + i) for i in range(count)]
@@ -44,11 +47,11 @@ def test_linked_list_create():
 def test_linked_list_add_to_head():
     list_ = LinkedList()
     node1, node2, node3 = create_nodes(count=3)
-    
+
     list_.add_to_head(node1)
     assert list_.get_head() == node1
     assert list_.get_tail() == node1
-    
+
     list_.add_to_head(node2)
     assert list_.get_head() == node2
     assert node2.next == node1
@@ -63,11 +66,11 @@ def test_linked_list_add_to_head():
 def test_linked_list_add_to_tail():
     list_ = LinkedList()
     node1, node2, node3 = create_nodes(count=3)
-    
+
     list_.add_to_tail(node1)
     assert list_.get_head() == node1
     assert list_.get_tail() == node1
-    
+
     list_.add_to_tail(node2)
     assert list_.get_head() == node1
     assert node1.next == node2
@@ -108,7 +111,7 @@ def test_linked_list_insert_to_one_node():
     list_ = LinkedList()
     node1, node2 = create_nodes(count=2)
     list_.add_to_head(node1)
-    
+
     list_.insert(node1, node2)
     assert node1.get_next() == node2
     assert list_.get_head() == node1
@@ -119,13 +122,13 @@ def test_linked_list_insert_to_head():
     list_ = create_linked_list(node_count=6)
     node = create_nodes(count=1)
     head, afterHead = list_.get_head(), list_.get_head().get_next()
-    
+
     list_.insert(head, node)
     assert list_.get_head() == head
     assert head.get_next() == node
     assert node.get_next() == afterHead
-    
-    
+
+
 def test_linked_list_insert_to_tail():
     list_ = create_linked_list(node_count=6)
     node = create_nodes(count=1)
@@ -181,7 +184,6 @@ def test_linked_list_remove_from_head_one_node():
 
 def test_linked_list_remove_from_head_two_node():
     list_ = create_linked_list()
-    head = list_.get_head()
     tail = list_.get_tail()
     list_.remove_from_head()
     assert list_.get_head() == tail
@@ -260,7 +262,8 @@ def test_linked_list_remove_by_value_all():
         list_.add_to_head(node)
 
     list_.remove(value=100, is_all=True)
-    assert list_.convert_to_array() == [node for node in list_nodes if node.get_value() != 100]
+    expected = [node for node in list_nodes if node.get_value() != 100]
+    assert list_.convert_to_array() == expected
     assert len(list_) == 2
 
 
@@ -272,4 +275,3 @@ def test_linked_list_reverse():
     assert list_.convert_to_array() == expected
     assert list_.get_tail() == expected[-1]
     assert list_.get_head() == expected[0]
-    
