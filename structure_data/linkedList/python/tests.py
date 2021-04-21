@@ -44,6 +44,14 @@ def test_linked_list_create():
     assert list_.get_tail() is None
 
 
+def test_linked_list_init():
+    list_ = LinkedList()
+    node = create_nodes(count=1)
+    list_.init(node)
+    assert list_.get_head() == node
+    assert list_.get_tail() == node
+
+
 def test_linked_list_add_to_head():
     list_ = LinkedList()
     node1, node2, node3 = create_nodes(count=3)

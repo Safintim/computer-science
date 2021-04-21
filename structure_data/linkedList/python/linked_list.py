@@ -7,6 +7,9 @@ class Node:
     value: int
     next: Optional['Node'] = None
 
+    def set_value(self, value: int) -> None:
+        self.value = value
+
     def get_value(self) -> int:
         return self.value
 
@@ -65,20 +68,21 @@ class LinkedList:
     def is_head(self, node: Optional[Node]) -> bool:
         return self.get_head() == node
 
+    def init(self, node: Node) -> None:
+        self.set_head(node)
+        self.set_tail(node)
+
     def add_to_head(self, node: Node) -> None:
         if self.is_empty():
-            self.set_head(node)
-            self.set_tail(node)
-            return
+            return self.init(node)
 
         node.set_next(self.get_head())
         self.set_head(node)
 
     def add_to_tail(self, node: Node) -> None:
         if self.is_empty():
-            self.set_head(node)
-            self.set_tail(node)
-            return
+            return self.init(node)
+
         tail = self.get_tail()
         tail.set_next(node)
         self.set_tail(node)
