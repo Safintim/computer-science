@@ -150,6 +150,20 @@ class LinkedList:
         self.set_tail(None)
         self.set_head(None)
 
+    def reverse(self) -> None:
+        head = self.get_head()
+        tail = None
+        self.set_tail(head)
+        while head:
+            new_head = head.get_next()
+            
+            if not new_head:
+                self.set_head(head)
+
+            head.set_next(tail)
+            tail = head
+            head = new_head
+
     def __iter__(self) -> LinkedListIterator:
         return LinkedListIterator(self.get_head())
 

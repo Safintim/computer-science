@@ -262,3 +262,14 @@ def test_linked_list_remove_by_value_all():
     list_.remove(value=100, is_all=True)
     assert list_.convert_to_array() == [node for node in list_nodes if node.get_value() != 100]
     assert len(list_) == 2
+
+
+def test_linked_list_reverse():
+    list_ = create_linked_list(node_count=6)
+    old_array = list_.convert_to_array()
+    expected = old_array[::-1]
+    list_.reverse()
+    assert list_.convert_to_array() == expected
+    assert list_.get_tail() == expected[-1]
+    assert list_.get_head() == expected[0]
+    
