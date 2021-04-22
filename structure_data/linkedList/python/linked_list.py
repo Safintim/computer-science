@@ -145,10 +145,8 @@ class LinkedList:
         self.set_tail(head)
         while head:
             new_head = head.get_next()
-
             if not new_head:
                 self.set_head(head)
-
             head.set_next(tail)
             tail = head
             head = new_head
@@ -164,7 +162,7 @@ class LinkedList:
     def convert_to_array(self) -> List[Node]:
         return [node for node in self]
 
-    def clear(self):
+    def clear(self) -> None:
         self.set_tail(None)
         self.set_head(None)
 

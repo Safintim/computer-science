@@ -156,7 +156,7 @@ def test_linked_list_insert():
     assert node.get_next() == next_node
 
 
-def test_linked_list_get_array():
+def test_linked_list_convert_to_array():
     list_ = LinkedList()
     nodes = create_nodes(6)
     for node in nodes:
