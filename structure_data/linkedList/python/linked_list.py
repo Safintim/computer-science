@@ -172,6 +172,33 @@ class LinkedList:
     def __len__(self) -> int:
         return len(self.convert_to_array())
 
+    def has_cycle(self) -> bool:
+        if self.is_empty():
+            return False
+
+        slow_runner = speed_runner = self.get_head()
+        while speed_runner and speed_runner.get_next():
+            slow_runner = slow_runner.get_next()
+            speed_runner = speed_runner.get_next().get_next()
+            if speed_runner == slow_runner:
+                return True
+        return False
+
+    def detect_cycle(self) -> Optional[Node]:
+        if self.is_empty():
+            return None
+
+        head = self.get_head()
+        slow_runner = speed_runner = head
+        while speed_runner and speed_runner.get_next():
+            slow_runner = slow_runner.get_next()
+            speed_runner = speed_runner.get_next().get_next()
+            if speed_runner == slow_runner:
+                while head != slow_runner:
+                    head = head.get_next()
+                    slow_runner = slow_runner.get_next()
+                return head
+
 
 def head(list_: LinkedList) -> Optional[Node]:
     return list_.get_head()

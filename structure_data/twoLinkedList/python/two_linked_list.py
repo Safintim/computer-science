@@ -174,7 +174,6 @@ class TwoLinkedList:
     def find_all(self, value: int) -> List[Node]:
         return [node for node in self if node.get_value() == value]
 
-
     def clear(self) -> None:
         self.set_tail(None)
         self.set_head(None)
@@ -187,5 +186,3 @@ class TwoLinkedList:
 
     def __len__(self) -> int:
         return len(self.convert_to_array())
-
-

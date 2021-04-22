@@ -298,3 +298,35 @@ def test_tail():
     expected = list_.convert_to_array()
     assert list_.get_head() == old_head.get_next()
     assert old_list[1:] == expected
+
+
+def test_has_cycle():
+    list_ = LinkedList()
+    node1 = Node(100)
+    node2 = Node(100)
+    node3 = Node(100)
+    for node in (node1, node2, node3):
+        list_.add_to_tail(node)
+    node3.set_next(node2)
+    assert list_.has_cycle()
+
+
+def test_not_has_cycle_true():
+    list_ = create_linked_list(node_count=6)
+    assert not list_.has_cycle()
+
+
+def test_detect_cycle():
+    list_ = LinkedList()
+    node1 = Node(100)
+    node2 = Node(100)
+    node3 = Node(100)
+    for node in (node1, node2, node3):
+        list_.add_to_tail(node)
+    node3.set_next(node2)
+    assert list_.detect_cycle() == node2
+
+
+def test_not_detect_cycle():
+    list_ = create_linked_list(node_count=6)
+    assert list_.detect_cycle() is None
