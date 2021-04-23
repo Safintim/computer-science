@@ -330,3 +330,16 @@ def test_detect_cycle():
 def test_not_detect_cycle():
     list_ = create_linked_list(node_count=6)
     assert list_.detect_cycle() is None
+
+
+def test_intersection():
+    node = Node(8, next=Node(4, next=Node(5)))
+    node1 = Node(4, next=Node(1, next=node))
+    node2 = Node(5, next=Node(6, next=Node(1, next=node)))
+    assert LinkedList.intersection(node1, node2) == node
+
+
+def test_not_intersection():
+    node1 = Node(2, next=Node(6, next=Node(4)))
+    node2 = Node(1, next=Node(5))
+    assert LinkedList.intersection(node1, node2) is None
