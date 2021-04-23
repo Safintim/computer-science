@@ -1,4 +1,4 @@
-from queue_ import Queue
+from queue_ import Queue, MovingAverage
 
 
 def test_create_queue():
@@ -72,3 +72,11 @@ def test_work():
     assert q.is_full()
     assert q.front() == 3
     assert q.rear() == 5
+
+
+def test_moving_average():
+    m = MovingAverage(3)
+    assert m.next(1) == 1
+    assert m.next(10) == 5.5
+    assert round(m.next(3)) == 5
+    assert m.next(5) == 6

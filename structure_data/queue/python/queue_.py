@@ -1,3 +1,6 @@
+from queue import Queue as PythonQueue
+
+
 class Queue:
     def __init__(self, max_size) -> None:
         self.max_size: int = max_size
@@ -39,3 +42,23 @@ class Queue:
 
     def rear(self) -> int:
         return -1 if self.is_empty() else self.data[self.tail]
+
+
+class MovingAverage:
+    def __init__(self, size: int):
+        self.queue = PythonQueue(maxsize=size)
+
+    def next(self, value: int) -> float:
+        if self.queue.full():
+            self.queue.get()
+
+        self.queue.put(value)
+        size = self.queue.qsize()
+        sum_ = 0
+        while size != 0:
+            num = self.queue.get()
+            sum_ += num
+            size -= 1
+            self.queue.put(num)
+
+        return sum_ / self.queue.qsize()
