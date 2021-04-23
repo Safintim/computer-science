@@ -343,3 +343,4 @@ def test_not_intersection():
     node1 = Node(2, next=Node(6, next=Node(4)))
     node2 = Node(1, next=Node(5))
     assert LinkedList.intersection(node1, node2) is None
+from collections import deque
