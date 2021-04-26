@@ -298,3 +298,79 @@ def reverse(head: Node) -> Node:
         tail = head
         head = new_head
     return tail
+
+
+class AlternativeNode:
+    def __init__(self, v: int) -> None:
+        self.val = v
+        self.next = None
+
+
+class AlternativeLinkedList:
+    def __init__(self) -> None:
+        self.head = None
+        self.size = 0
+
+    def isEmpty(self):
+        return self.head is None
+
+    def get(self, index: int) -> int:
+        if index >= self.size or index < 0:
+            return -1
+
+        node = self.head
+        for _ in range(index):
+            node = node.next
+
+        return node.val
+
+    def addAtHead(self, val: int) -> None:
+        self.addAtIndex(0, val)
+        # node = AlternativeNode(val)
+        # node.next = self.head.next
+        # self.head = node
+        # self.size += 1
+
+    def addAtTail(self, val: int) -> None:
+        self.addAtIndex(self.size, val)
+        # node = AlternativeNode(val)
+        # self.size += 1
+        # if self.isEmpty():
+        #     self.head = node
+        # else:
+        #     current = self.head
+        #     while current.next:
+        #         current = current.next
+        #     current.next = node
+
+    def addAtIndex(self, index: int, val: int) -> None:
+        if index > self.size or index < 0:
+            return
+
+        new_node = AlternativeNode(val)
+        head = self.head
+        if index == 0:
+            new_node.next = head
+            self.head = new_node
+        else:
+            for _ in range(index - 1):
+                head = head.next
+
+            new_node.next = head.next
+            head.next = new_node
+
+        self.size += 1
+
+    def deleteAtIndex(self, index: int) -> None:
+        if index >= self.size or index < 0:
+            return
+
+        node = self.head
+        if index == 0:
+            self.head = node.next
+        else:
+            for _ in range(index - 1):
+                node = node.next
+
+            node.next = node.next.next
+        self.size -= 1
