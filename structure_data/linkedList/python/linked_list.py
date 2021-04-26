@@ -324,40 +324,30 @@ class AlternativeLinkedList:
 
         return node.val
 
+    def getNode(self, index):
+        head = self.head
+        for _ in range(index):
+            head = head.next
+        return head
+
     def addAtHead(self, val: int) -> None:
         self.addAtIndex(0, val)
-        # node = AlternativeNode(val)
-        # node.next = self.head.next
-        # self.head = node
-        # self.size += 1
 
     def addAtTail(self, val: int) -> None:
         self.addAtIndex(self.size, val)
-        # node = AlternativeNode(val)
-        # self.size += 1
-        # if self.isEmpty():
-        #     self.head = node
-        # else:
-        #     current = self.head
-        #     while current.next:
-        #         current = current.next
-        #     current.next = node
 
     def addAtIndex(self, index: int, val: int) -> None:
         if index > self.size or index < 0:
             return
 
         new_node = AlternativeNode(val)
-        head = self.head
         if index == 0:
-            new_node.next = head
+            new_node.next = self.head
             self.head = new_node
         else:
-            for _ in range(index - 1):
-                head = head.next
-
-            new_node.next = head.next
-            head.next = new_node
+            node = self.getNode(index - 1)
+            new_node.next = node.next
+            node.next = new_node
 
         self.size += 1
 
@@ -365,12 +355,9 @@ class AlternativeLinkedList:
         if index >= self.size or index < 0:
             return
 
-        node = self.head
         if index == 0:
-            self.head = node.next
+            self.head = self.head.next
         else:
-            for _ in range(index - 1):
-                node = node.next
-
+            node = self.getNode(index - 1)
             node.next = node.next.next
         self.size -= 1

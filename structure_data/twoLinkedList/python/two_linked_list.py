@@ -185,3 +185,84 @@ class TwoLinkedList:
 
     def __len__(self) -> int:
         return len(self.convert_to_array())
+
+
+class AlternativeNode:
+    def __init__(self, val, next=None, prev=None):
+        self.val = val
+        self.next = next
+        self.prev = prev
+
+
+class AlternativeTwoLinkedList:
+
+    def __init__(self) -> None:
+        self.head = None
+        self.size = 0
+
+    def isEmpty(self):
+        return self.head is None
+
+    def get(self, index: int) -> int:
+        if index >= self.size or index < 0:
+            return -1
+
+        node = self.head
+        for _ in range(index):
+            node = node.next
+
+        return node.val
+
+    def addAtHead(self, val: int) -> None:
+        self.addAtIndex(0, val)
+
+    def addAtTail(self, val: int) -> None:
+        self.addAtIndex(self.size, val)
+
+    def getNode(self, index):
+        head = self.head
+        for _ in range(index):
+            head = head.next
+        return head
+
+    def __addAtHead(self, node: Node) -> None:
+        node.next = self.head
+        if self.head:
+            self.head.prev = node
+        self.head = node
+
+    def addAtIndex(self, index: int, val: int) -> None:
+        if index > self.size or index < 0:
+            return
+
+        new_node = AlternativeNode(val)
+        if index == 0:
+            self.__addAtHead(new_node)
+        else:
+            prev = self.getNode(index - 1)
+            new_node.next = prev.next
+            new_node.prev = prev
+            if prev.next:
+                prev.next.prev = new_node
+            prev.next = new_node
+
+        self.size += 1
+
+    def __deleteAtHead(self) -> None:
+        self.head = self.head.next
+        if self.head:
+            self.head.prev = None
+
+    def deleteAtIndex(self, index: int) -> None:
+        if index >= self.size or index < 0:
+            return
+
+        if index == 0:
+            self.__deleteAtHead()
+        else:
+            node = self.getNode(index - 1)
+            node_next = node.next.next
+            if node_next:
+                node_next.prev = node
+            node.next = node_next
+        self.size -= 1
