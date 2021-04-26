@@ -8,7 +8,8 @@ from linked_list import (
     head,
     tail,
     intersection,
-    delete_from_tail
+    delete_from_tail,
+    palindrome
 )
 
 
@@ -387,3 +388,13 @@ def test_delete_from_tail_nth():
     node = head.get_next().get_next().get_next()
     assert delete_from_tail(head=head, n=3) == head
     assert node not in list_
+
+
+def test_palindrome():
+    head = Node(1, next=Node(1, next=Node(2, next=Node(1, next=Node(1)))))
+    assert palindrome(head)
+
+
+def test_palindrome_not():
+    head = Node(1, next=Node(1, next=Node(2, next=Node(1))))
+    assert not palindrome(head)

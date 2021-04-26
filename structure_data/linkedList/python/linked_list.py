@@ -255,7 +255,7 @@ def tail(list_: LinkedList) -> LinkedList:
     return new_list
 
 
-def odd_even_list(head) -> Node:
+def odd_even_list(head: Node) -> Node:
     if not head:
         return head
 
@@ -270,3 +270,31 @@ def odd_even_list(head) -> Node:
 
     odd.next = start_even
     return head
+
+
+def palindrome(head: Node) -> bool:
+    slow = fast = head
+
+    while fast and fast.get_next():
+        fast = fast.get_next().get_next()
+        slow = slow.get_next()
+
+    slow = reverse(slow)
+    fast = head
+
+    while slow:
+        if slow.get_value() != fast.get_value():
+            return False
+        fast = fast.get_next()
+        slow = slow.get_next()
+    return True
+
+
+def reverse(head: Node) -> Node:
+    tail = None
+    while head:
+        new_head = head.get_next()
+        head.set_next(tail)
+        tail = head
+        head = new_head
+    return tail
