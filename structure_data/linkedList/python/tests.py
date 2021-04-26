@@ -265,6 +265,7 @@ def test_linked_list_remove_by_value():
     assert list_.convert_to_array() == list_nodes
 
     list_.remove(value=200)
+    assert list_nodes[1].get_next() != list_nodes[2]
     del list_nodes[2]
     assert list_.convert_to_array() == list_nodes
 

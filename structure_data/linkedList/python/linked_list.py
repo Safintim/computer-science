@@ -19,6 +19,9 @@ class Node:
     def set_next(self, node: Optional['Node']):
         self.next = node
 
+    def __repr__(self):
+        return 'Node({})'.format(self.get_value())
+
 
 @dataclass
 class LinkedListIterator:
@@ -126,18 +129,31 @@ class LinkedList:
         return tail
 
     def remove(self, value: int, is_all: bool = False) -> None:
-        prev = self.get_head()
-        for node in self:
-            if node.get_value() == value:
-                if self.is_tail(node):
-                    self.remove_from_tail()
-                elif self.is_head(node):
-                    self.remove_from_head()
-                else:
-                    prev.set_next(node.get_next())
+        head = self.get_head()
+
+        if self.is_empty():
+            return None
+
+        while head and head.get_value() == value:
+            head = head.get_next()
+            self.set_head(head)
+            if not is_all:
+                return
+
+        if self.is_tail(head):
+            return self.clear()
+
+        current = head
+        while current:
+            current_next = current.get_next()
+            if current_next and current_next.get_value() == value:
+                current.set_next(current_next.get_next())
+                if self.is_tail(current_next):
+                    self.set_tail(current)
                 if not is_all:
-                    break
-            prev = node
+                    return
+            else:
+                current = current_next
 
     def reverse(self) -> None:
         head = self.get_head()
@@ -237,3 +253,20 @@ def tail(list_: LinkedList) -> LinkedList:
     new_list.set_head(new_head)
     new_list.set_tail(list_.get_tail())
     return new_list
+
+
+def odd_even_list(head) -> Node:
+    if not head:
+        return head
+
+    odd = head
+    start_even = head.next
+    even = start_even
+    while even and even.next:
+        odd.next = odd.next.next
+        odd = odd.next
+        even.next = even.next.next
+        even = even.next
+
+    odd.next = start_even
+    return head
