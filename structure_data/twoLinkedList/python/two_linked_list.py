@@ -155,16 +155,15 @@ class TwoLinkedList:
                     break
 
     def reverse(self) -> None:
-        tail = self.get_tail()
-        self.set_head(tail)
-        while tail:
-            tail_prev = tail.get_prev()
-            if not tail_prev:
-                self.set_tail(tail)
-            tail_next = tail.get_next()
-            tail.set_next(tail_prev)
-            tail.set_prev(tail_next)
-            tail = tail_prev
+        current = self.get_head()
+        self.set_tail(current)
+        while current:
+            current_next = current.get_next()
+            current.set_next(current.get_prev())
+            current.set_prev(current_next)
+            if not current_next:
+                self.set_head(current)
+            current = current_next
 
     def find(self, value: int) -> Optional[Node]:
         for node in self:

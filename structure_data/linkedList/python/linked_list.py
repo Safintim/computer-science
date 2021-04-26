@@ -199,15 +199,32 @@ class LinkedList:
                     slow_runner = slow_runner.get_next()
                 return head
 
-    @staticmethod
-    def intersection(head_a: Node, head_b: Node) -> Optional[Node]:
-        point_a = head_a
-        point_b = head_b
-        while point_a != point_b:
-            point_a = head_b if point_a is None else point_a.get_next()
-            point_b = head_a if point_b is None else point_b.get_next()
 
-        return point_a
+def delete_from_tail(head: Node, n: int) -> Optional[Node]:
+    if not head:
+        return None
+    slow = speed = head
+    for _ in range(n):
+        speed = speed.get_next()
+
+    if not speed:
+        return slow.get_next()
+
+    while speed.get_next():
+        slow = slow.get_next()
+        speed = speed.get_next()
+    slow.set_next(slow.get_next().get_next())
+    return head
+
+
+def intersection(head_a: Node, head_b: Node) -> Optional[Node]:
+    point_a = head_a
+    point_b = head_b
+    while point_a != point_b:
+        point_a = head_b if point_a is None else point_a.get_next()
+        point_b = head_a if point_b is None else point_b.get_next()
+
+    return point_a
 
 
 def head(list_: LinkedList) -> Optional[Node]:

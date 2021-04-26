@@ -2,7 +2,14 @@ from typing import Union, List
 
 import pytest
 
-from linked_list import Node, LinkedList, head, tail
+from linked_list import (
+    Node,
+    LinkedList,
+    head,
+    tail,
+    intersection,
+    delete_from_tail
+)
 
 
 def create_nodes(
@@ -336,11 +343,46 @@ def test_intersection():
     node = Node(8, next=Node(4, next=Node(5)))
     node1 = Node(4, next=Node(1, next=node))
     node2 = Node(5, next=Node(6, next=Node(1, next=node)))
-    assert LinkedList.intersection(node1, node2) == node
+    assert intersection(node1, node2) == node
 
 
 def test_not_intersection():
     node1 = Node(2, next=Node(6, next=Node(4)))
     node2 = Node(1, next=Node(5))
-    assert LinkedList.intersection(node1, node2) is None
-from collections import deque
+    assert intersection(node1, node2) is None
+
+
+def test_delete_from_tail_nth_empty_list():
+    list_ = LinkedList()
+    assert delete_from_tail(head=list_.get_head(), n=2) is None
+
+
+def test_delete_from_tail_nth_one_node():
+    list_ = LinkedList()
+    list_.init(create_nodes(1))
+    assert delete_from_tail(head=list_.get_head(), n=1) is None
+
+
+def test_delete_from_tail_nth_two_node_tail():
+    list_ = create_linked_list(node_count=2)
+    head = list_.get_head()
+    tail = list_.get_tail()
+    new = delete_from_tail(head=head, n=1)
+    assert new.get_next() is None
+    assert tail not in list_
+
+
+def test_delete_from_tail_nth_two_node_head():
+    list_ = create_linked_list(node_count=2)
+    head = list_.get_head()
+    tail = list_.get_tail()
+    new = delete_from_tail(head=head, n=2)
+    assert new == tail
+
+
+def test_delete_from_tail_nth():
+    list_ = create_linked_list(node_count=6)
+    head = list_.get_head()
+    node = head.get_next().get_next().get_next()
+    assert delete_from_tail(head=head, n=3) == head
+    assert node not in list_
