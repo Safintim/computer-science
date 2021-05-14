@@ -301,9 +301,12 @@ def reverse(head: Node) -> Node:
 
 
 class AlternativeNode:
-    def __init__(self, v: int) -> None:
+    def __init__(self, v: int, next=None) -> None:
         self.val = v
-        self.next = None
+        self.next = next
+
+    def __repr__(self):
+        return 'Node({})'.format(self.get_value())
 
 
 class AlternativeLinkedList:
@@ -318,10 +321,7 @@ class AlternativeLinkedList:
         if index >= self.size or index < 0:
             return -1
 
-        node = self.head
-        for _ in range(index):
-            node = node.next
-
+        node = self.getNode(index)
         return node.val
 
     def getNode(self, index):
@@ -361,3 +361,48 @@ class AlternativeLinkedList:
             node = self.getNode(index - 1)
             node.next = node.next.next
         self.size -= 1
+
+
+def merge_two_lists(l1: AlternativeNode, l2: AlternativeNode) -> AlternativeNode:
+    if not (l1 and l2):
+        return l1 or l2
+
+    dummy = AlternativeNode(-1)
+    current = dummy
+
+    while l1 and l2:
+        if l1.val < l2.val:
+            current.next = l1
+            l1 = l1.next
+        else:
+            current.next = l2
+            l2 = l2.next
+        current = current.next
+
+    current.next = l1 or l2
+    return dummy.next
+
+
+def rotate(head: AlternativeNode, k: int):
+    if not (head and head.next):
+        return head
+
+    length = 1
+    last = head
+    while last.next:
+        length += 1
+        last = last.next
+
+    k %= length
+
+    if k == 0:
+        return head
+
+    rest = head
+    for _ in range(length - k - 1):
+        rest = rest.next
+
+    last.next = head
+    new_head = rest.next
+    rest.next = None
+    return new_head

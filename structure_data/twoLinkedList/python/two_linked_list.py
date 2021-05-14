@@ -207,10 +207,7 @@ class AlternativeTwoLinkedList:
         if index >= self.size or index < 0:
             return -1
 
-        node = self.head
-        for _ in range(index):
-            node = node.next
-
+        node = self.getNode(index)
         return node.val
 
     def addAtHead(self, val: int) -> None:

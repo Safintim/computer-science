@@ -3,13 +3,15 @@ from typing import Union, List
 import pytest
 
 from linked_list import (
+    AlternativeNode,
     Node,
     LinkedList,
     head,
     tail,
     intersection,
     delete_from_tail,
-    palindrome
+    palindrome,
+    merge_two_lists
 )
 
 
@@ -398,3 +400,10 @@ def test_palindrome():
 def test_palindrome_not():
     head = Node(1, next=Node(1, next=Node(2, next=Node(1))))
     assert not palindrome(head)
+
+
+def test_merge():
+    l1 = AlternativeNode(1, next=AlternativeNode(2, next=AlternativeNode(4)))
+    l2 = AlternativeNode(1, next=AlternativeNode(3, next=AlternativeNode(4)))
+
+    assert merge_two_lists(l1, l2)
