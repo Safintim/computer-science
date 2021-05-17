@@ -306,7 +306,7 @@ class AlternativeNode:
         self.next = next
 
     def __repr__(self):
-        return 'Node({})'.format(self.get_value())
+        return 'Node({})'.format(self.val)
 
 
 class AlternativeLinkedList:
@@ -406,3 +406,51 @@ def rotate(head: AlternativeNode, k: int):
     new_head = rest.next
     rest.next = None
     return new_head
+
+
+def sum_num(head_a: AlternativeNode, head_b: AlternativeNode) -> AlternativeNode:
+    p_a, p_b = head_a, head_b
+    dummy = new_num = AlternativeNode(-1)
+    remember = 0
+
+    while p_a or p_b:
+        if p_a and p_b:
+            val = p_a.val + p_b.val + remember
+        else:
+            node = p_a or p_b
+            val = node.val + remember
+        remember = val // 10
+        val = val % 10
+        dummy.next = AlternativeNode(val)
+        dummy = dummy.next
+        p_a = p_a.next if p_a else p_a
+        p_b = p_b.next if p_b else p_b
+
+    if remember != 0:
+        dummy.next = AlternativeNode(remember)
+
+    return new_num.next
+
+
+class NodeWithChild:
+    def __init__(self, val: int = 0, next: 'NodeWithChild' = None, child: 'NodeWithChild' = None) -> None:
+        self.val = val
+        self.next = next
+        self.child = child
+
+
+def traverse(head):
+    while head:
+        yield head
+        if head.child:
+            yield from traverse(head.child)
+        head = head.next
+
+
+def flat(head: NodeWithChild) -> NodeWithChild:
+    new = dummy = NodeWithChild(-1)
+    for node in traverse(head):
+        print(node.val)
+        dummy.next = node
+        dummy = dummy.next
+    return new.next

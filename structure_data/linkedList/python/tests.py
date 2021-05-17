@@ -5,13 +5,16 @@ import pytest
 from linked_list import (
     AlternativeNode,
     Node,
+    NodeWithChild,
     LinkedList,
     head,
     tail,
     intersection,
     delete_from_tail,
     palindrome,
-    merge_two_lists
+    merge_two_lists,
+    sum_num,
+    flat,
 )
 
 
@@ -407,3 +410,14 @@ def test_merge():
     l2 = AlternativeNode(1, next=AlternativeNode(3, next=AlternativeNode(4)))
 
     assert merge_two_lists(l1, l2)
+
+
+def test_sum_num():
+    l1 = AlternativeNode(9, next=AlternativeNode(9, next=AlternativeNode(9, next=AlternativeNode(9, next=AlternativeNode(9, next=AlternativeNode(9, next=AlternativeNode(9)))))))
+    l2 = AlternativeNode(9, next=AlternativeNode(9, next=AlternativeNode(9)))
+    assert sum_num(l1, l2)
+
+
+def test_flat():
+    l1 = NodeWithChild(1, next=NodeWithChild(2, child=NodeWithChild(5, next=NodeWithChild(6, child=NodeWithChild(7), next=NodeWithChild(8))), next=NodeWithChild(3,next=NodeWithChild(4))))
+    assert flat(l1)
