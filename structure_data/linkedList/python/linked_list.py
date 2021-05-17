@@ -432,9 +432,10 @@ def sum_num(head_a: AlternativeNode, head_b: AlternativeNode) -> AlternativeNode
     return new_num.next
 
 
-class NodeWithChild:
-    def __init__(self, val: int = 0, next: 'NodeWithChild' = None, child: 'NodeWithChild' = None) -> None:
+class NodeTwoLinkedList:
+    def __init__(self, val, prev=None, next=None, child=None):
         self.val = val
+        self.prev = prev
         self.next = next
         self.child = child
 
@@ -447,10 +448,39 @@ def traverse(head):
         head = head.next
 
 
-def flat(head: NodeWithChild) -> NodeWithChild:
-    new = dummy = NodeWithChild(-1)
-    for node in traverse(head):
-        print(node.val)
+def flatten(head: NodeTwoLinkedList) -> NodeTwoLinkedList:
+    if not head:
+        return
+    new = dummy = NodeTwoLinkedList(-1)
+    for node in list(traverse(head)):
+        node.prev = dummy
+        node.child = None
         dummy.next = node
         dummy = dummy.next
-    return new.next
+    first = new.next
+    first.prev = None
+    return first
+
+
+def flatten2(head):
+    if not head:
+        return
+
+    def rec(head):
+        last = head
+        while head:
+            next_head = head.next
+            last = head
+            if head.child:
+                last = rec(head.child)
+                head.next = head.child
+                head.child.prev = head
+                last.next = next_head
+                if next_head:
+                    next_head.prev = last
+                head.child = None
+            head = next_head
+        return last
+
+    rec(head)
+    return head

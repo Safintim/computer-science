@@ -5,7 +5,7 @@ import pytest
 from linked_list import (
     AlternativeNode,
     Node,
-    NodeWithChild,
+    NodeTwoLinkedList,
     LinkedList,
     head,
     tail,
@@ -14,7 +14,7 @@ from linked_list import (
     palindrome,
     merge_two_lists,
     sum_num,
-    flat,
+    flatten,
 )
 
 
@@ -418,6 +418,6 @@ def test_sum_num():
     assert sum_num(l1, l2)
 
 
-def test_flat():
-    l1 = NodeWithChild(1, next=NodeWithChild(2, child=NodeWithChild(5, next=NodeWithChild(6, child=NodeWithChild(7), next=NodeWithChild(8))), next=NodeWithChild(3,next=NodeWithChild(4))))
-    assert flat(l1)
+def test_flatten():
+    l1 = NodeTwoLinkedList(1, next=NodeTwoLinkedList(2, child=NodeTwoLinkedList(5, next=NodeTwoLinkedList(6, child=NodeTwoLinkedList(7), next=NodeTwoLinkedList(8))), next=NodeTwoLinkedList(3, next=NodeTwoLinkedList(4))))
+    assert flatten(l1)
