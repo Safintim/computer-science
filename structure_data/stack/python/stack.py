@@ -36,3 +36,22 @@ class MinStack:
     def get_min(self):
         if self.data:
             return self.data[-1][1]
+
+
+def is_valid_parentheses(s):
+    stack = []
+    brackets = {
+        '(': ')',
+        '[': ']',
+        '{': '}',
+    }
+    for char in s:
+        if char in brackets:
+            stack.append(char)
+        else:
+            if not stack:
+                return False
+            bracket = stack.pop()
+            if char != bracket:
+                return False
+    return not stack
