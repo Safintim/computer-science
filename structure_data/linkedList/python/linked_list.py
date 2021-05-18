@@ -408,28 +408,22 @@ def rotate(head: AlternativeNode, k: int):
     return new_head
 
 
-def sum_num(head_a: AlternativeNode, head_b: AlternativeNode) -> AlternativeNode:
-    p_a, p_b = head_a, head_b
-    dummy = new_num = AlternativeNode(-1)
+def sum_num(l1: AlternativeNode, l2: AlternativeNode) -> AlternativeNode:
+    root = dummy = AlternativeNode(-1)
     remember = 0
+    while l1 or l2 or remember:
+        val = 0
+        if l1:
+            val += l1.val
+            l1 = l1.next
+        if l2:
+            val += l2.val
+            l2 = l2.next
 
-    while p_a or p_b:
-        if p_a and p_b:
-            val = p_a.val + p_b.val + remember
-        else:
-            node = p_a or p_b
-            val = node.val + remember
-        remember = val // 10
-        val = val % 10
+        remember, val = divmod(remember + val, 10)
         dummy.next = AlternativeNode(val)
         dummy = dummy.next
-        p_a = p_a.next if p_a else p_a
-        p_b = p_b.next if p_b else p_b
-
-    if remember != 0:
-        dummy.next = AlternativeNode(remember)
-
-    return new_num.next
+    return root.next
 
 
 class NodeTwoLinkedList:
