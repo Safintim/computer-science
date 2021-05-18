@@ -478,3 +478,37 @@ def flatten2(head):
 
     rec(head)
     return head
+
+
+class RandomNode:
+    def __init__(self, x: int, next: 'RandomNode' = None, random: 'RandomNode' = None):
+        self.val = int(x)
+        self.next = next
+        self.random = random
+
+def copy_random_list(head: RandomNode) -> RandomNode:
+    if not head:
+        return head
+    
+    current = head
+    while current:
+        current_next = current.next
+        current.next = RandomNode(current.val, current.next, current.random)
+        current = current_next
+    
+    current = head
+    while current:
+        if current.random:
+            current.next.random = current.random.next
+        current = current.next.next
+    
+    current = head
+    copy_head = current.next
+    while current:
+        tmp = current.next.next
+        copy = current.next
+        current.next = tmp
+        if tmp:
+            copy.next = tmp.next
+        current = tmp
+    return copy_head
