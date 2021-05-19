@@ -1,4 +1,5 @@
 import math
+from collections import deque
 
 
 class Stack:
@@ -90,3 +91,26 @@ def eval_reverse_polish_notation(self, tokens):
         else:
             stack.append(int(token))
     return stack.pop()
+
+
+class StackBasedOnQueue:
+    def __init__(self):
+        self.q1 = deque()
+        self.q2 = deque()
+
+    def push(self, x):
+        self.q1.append(x)
+
+    def pop(self):
+        while len(self.q1) > 1:
+            self.q2.append(self.q1.popleft())
+
+        el = self.q1.popleft()
+        self.q1, self.q2 = self.q2, self.q1
+        return el
+
+    def top(self):
+        return self.q1[-1]
+
+    def empty(self):
+        return not (self.q1 or self.q2)
