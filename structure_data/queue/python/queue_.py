@@ -56,3 +56,27 @@ class MovingAverage:
         self.queue.put(value)
         self.total += value
         return self.total / self.queue.qsize()
+
+
+class QueueBaseStack:
+    def __init__(self):
+        self.stack1 = []
+        self.stack2 = []
+
+    def push(self, x):
+        self.stack2.append(x)
+
+    def pop(self):
+        if not self.stack1:
+            while self.stack2:
+                self.stack1.append(self.stack2.pop())
+        return self.stack1.pop()
+
+    def peek(self):
+        if self.stack1:
+            return self.stack1[-1]
+        else:
+            return self.stack2[0]
+
+    def empty(self):
+        return not (self.stack1 or self.stack2)

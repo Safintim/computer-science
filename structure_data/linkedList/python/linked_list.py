@@ -486,22 +486,23 @@ class RandomNode:
         self.next = next
         self.random = random
 
+
 def copy_random_list(head: RandomNode) -> RandomNode:
     if not head:
         return head
-    
+
     current = head
     while current:
         current_next = current.next
         current.next = RandomNode(current.val, current.next, current.random)
         current = current_next
-    
+
     current = head
     while current:
         if current.random:
             current.next.random = current.random.next
         current = current.next.next
-    
+
     current = head
     copy_head = current.next
     while current:
