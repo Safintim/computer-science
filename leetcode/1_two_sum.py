@@ -10,3 +10,25 @@ def two_sum(self, nums: List[int], target: int) -> List[int]:
             return [cache[dif], i]
         cache[num] = i
     return []
+
+
+class Line:
+    def __init__(self, w) -> None:
+        self.__w = w
+    
+    @property
+    def w(self):
+        return self.__w
+
+    @w.setter
+    def w(self, v):
+        self.__w = v
+
+    
+
+
+a=Line(10)
+print(a.w)
+a.w = 1
+print(a.w)
+print(type(a.w))

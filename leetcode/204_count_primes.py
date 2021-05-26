@@ -1,4 +1,4 @@
-def count_primes(self, n: int) -> int:
+def count_primes(n: int) -> int:
     if n <= 2:
         return 0
 
